@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Kebutuhan - VannHost</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+        
+        .product-content {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+            }
+            
+            .footer-links li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">VannHost</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="hero">
+            <h1>Order Kebutuhan Anda</h1>
+            <p>Temukan berbagai produk berkualitas dengan harga terbaik untuk memenuhi kebutuhan Anda sehari-hari.</p>
+            <a href="#" class="btn" id="contactBtn">Hubungi Kami</a>
+        </section>
+        
+        <section class="products">
+            <div class="product-card">
+                <div class="product-image">
+                    [Gambar Produk 1]
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Paket Hosting Basic</h3>
+                    <div class="product-price">Rp 100.000/bulan</div>
+                    <p class="product-description">Paket hosting dengan spesifikasi dasar yang cocok untuk website kecil atau blog pribadi.</p>
+                    <div class="product-actions">
+                        <a href="#" class="btn btn-sm" data-product="Paket Hosting Basic">Pesan Sekarang</a>
+                        <a href="#" class="btn btn-sm btn-outline">Detail</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    [Gambar Produk 2]
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Paket Hosting Premium</h3>
+                    <div class="product-price">Rp 250.000/bulan</div>
+                    <p class="product-description">Paket hosting dengan performa tinggi untuk website bisnis atau e-commerce.</p>
+                    <div class="product-actions">
+                        <a href="#" class="btn btn-sm" data-product="Paket Hosting Premium">Pesan Sekarang</a>
+                        <a href="#" class="btn btn-sm btn-outline">Detail</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    [Gambar Produk 3]
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Domain .com</h3>
+                    <div class="product-price">Rp 150.000/tahun</div>
+                    <p class="product-description">Daftarkan domain .com untuk website Anda dengan harga terjangkau.</p>
+                    <div class="product-actions">
+                        <a href="#" class="btn btn-sm" data-product="Domain .com">Pesan Sekarang</a>
+                        <a href="#" class="btn btn-sm btn-outline">Detail</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    [Gambar Produk 4]
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">SSL Certificate</h3>
+                    <div class="product-price">Rp 300.000/tahun</div>
+                    <p class="product-description">Amankan website Anda dengan sertifikat SSL untuk enkripsi data.</p>
+                    <div class="product-actions">
+                        <a href="#" class="btn btn-sm" data-product="SSL Certificate">Pesan Sekarang</a>
+                        <a href="#" class="btn btn-sm btn-outline">Detail</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">VannHost</div>
+            <ul class="footer-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">© 2023 VannHost. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Pesan Produk</h2>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="product">Produk</label>
+                    <input type="text" id="product" name="product" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Nomor WhatsApp</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Pesan Tambahan</label>
+                    <textarea id="message" name="message"></textarea>
+                </div>
+                <button type="submit" class="btn">Kirim Pesanan</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Hubungi Kami</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contact_name">Nama Lengkap</label>
+                    <input type="text" id="contact_name" name="contact_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact_email">Email</label>
+                    <input type="email" id="contact_email" name="contact_email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact_subject">Subjek</label>
+                    <input type="text" id="contact_subject" name="contact_subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact_message">Pesan</label>
+                    <textarea id="contact_message" name="contact_message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Kirim Pesan</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Order Modal
+        const orderModal = document.getElementById('orderModal');
+        const orderButtons = document.querySelectorAll('.product-actions .btn:first-child');
+        const productInput = document.getElementById('product');
+        
+        orderButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const productName = button.getAttribute('data-product');
+                productInput.value = productName;
+                orderModal.style.display = 'flex';
+            });
+        });
+        
+        // Contact Modal
+        const contactModal = document.getElementById('contactModal');
+        const contactBtn = document.getElementById('contactBtn');
+        
+        contactBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            contactModal.style.display = 'flex';
+        });
+        
+        // Close Modals
+        const closeButtons = document.querySelectorAll('.close-modal');
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                orderModal.style.display = 'none';
+                contactModal.style.display = 'none';
+            });
+        });
+        
+        // Close when clicking outside modal
+        window.addEventListener('click', (e) => {
+            if (e.target === orderModal) {
+                orderModal.style.display = 'none';
+            }
+            if (e.target === contactModal) {
+                contactModal.style.display = 'none';
+            }
+        });
+        
+        // Form Submissions
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically send the data to a server
+            alert('Pesanan Anda telah berhasil dikirim! Kami akan segera menghubungi Anda.');
+            orderModal.style.display = 'none';
+        });
+        
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Here you would typically send the data to a server
+            alert('Pesan Anda telah berhasil dikirim! Kami akan segera menghubungi Anda.');
+            contactModal.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
